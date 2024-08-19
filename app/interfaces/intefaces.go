@@ -16,4 +16,5 @@ type Tasks interface {
 
 type Lists interface {
 	CreateList(folderId string, body listmodels.ListCreationBody) (listmodels.List, error)
+	CreateFolderlessList(spaceId string, body listmodels.ListCreationBody) (listmodels.List, error)
 }
