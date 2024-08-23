@@ -53,6 +53,7 @@ func (ls *ListService) CreateFolderlessList(spaceId string, body listmodels.List
 	if resp.StatusCode != http.StatusOK {
 		return listmodels.List{}, errors.New("error creating list " + string(respBody))
 	}
+	fmt.Println(string(respBody))
 	err = json.Unmarshal(respBody, &list)
 	if err != nil {
 		return listmodels.List{}, err
