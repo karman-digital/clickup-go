@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	listmodels "github.com/karman-digital/clickup/models/lists"
+	"github.com/pkg/errors"
 )
 
 func (ls *ListService) CreateList(folderId string, body listmodels.ListCreationBody) (listmodels.List, error) {
@@ -23,8 +24,8 @@ func (ls *ListService) CreateList(folderId string, body listmodels.ListCreationB
 	if err != nil {
 		return listmodels.List{}, err
 	}
-	if resp.StatusCode != http.StatusCreated {
-		return listmodels.List{}, err
+	if resp.StatusCode != http.StatusOK {
+		return listmodels.List{}, errors.New("error creating list " + string(respBody))
 	}
 	err = json.Unmarshal(respBody, &list)
 	if err != nil {
@@ -48,8 +49,8 @@ func (ls *ListService) CreateFolderlessList(spaceId string, body listmodels.List
 	if err != nil {
 		return listmodels.List{}, err
 	}
-	if resp.StatusCode != http.StatusCreated {
-		return listmodels.List{}, err
+	if resp.StatusCode != http.StatusOK {
+		return listmodels.List{}, errors.New("error creating list " + string(respBody))
 	}
 	err = json.Unmarshal(respBody, &list)
 	if err != nil {
