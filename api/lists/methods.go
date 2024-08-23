@@ -2,11 +2,12 @@ package lists
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"net/http"
 
 	listmodels "github.com/karman-digital/clickup/models/lists"
-	"github.com/pkg/errors"
 )
 
 func (ls *ListService) CreateList(folderId string, body listmodels.ListCreationBody) (listmodels.List, error) {
@@ -15,7 +16,7 @@ func (ls *ListService) CreateList(folderId string, body listmodels.ListCreationB
 	if err != nil {
 		return listmodels.List{}, err
 	}
-	resp, err := ls.SendRequest(http.MethodPost, "/list", reqBody)
+	resp, err := ls.SendRequest(http.MethodPost, fmt.Sprintf("/folder/%s/list", folderId), reqBody)
 	if err != nil {
 		return listmodels.List{}, err
 	}
@@ -40,7 +41,7 @@ func (ls *ListService) CreateFolderlessList(spaceId string, body listmodels.List
 	if err != nil {
 		return listmodels.List{}, err
 	}
-	resp, err := ls.SendRequest(http.MethodPost, "/list", reqBody)
+	resp, err := ls.SendRequest(http.MethodPost, fmt.Sprintf("/space/%s/list", spaceId), reqBody)
 	if err != nil {
 		return listmodels.List{}, err
 	}
