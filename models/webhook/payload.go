@@ -18,3 +18,12 @@ type SharedHistoryItem struct {
 }
 
 type Data map[string]any
+
+type User struct {
+	ID             int    `json:"id"`
+	Username       string `json:"username"`
+	Email          string `json:"email"`
+	Color          string `json:"color"`
+	Initials       string `json:"initials"`
+	ProfilePicture string `json:"profilePicture"`
+}

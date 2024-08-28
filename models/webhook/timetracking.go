@@ -15,15 +15,6 @@ type TimeTrackState struct {
 	DateAdded string `json:"date_added"`
 }
 
-type User struct {
-	ID             int    `json:"id"`
-	Username       string `json:"username"`
-	Email          string `json:"email"`
-	Color          string `json:"color"`
-	Initials       string `json:"initials"`
-	ProfilePicture string `json:"profilePicture"`
-}
-
 type TimeTrackingData struct {
 	Description string `json:"description"`
 	IntervalId  string `json:"interval_id"`
@@ -31,6 +22,6 @@ type TimeTrackingData struct {
 
 type TimeTrackHistory struct {
 	SharedHistoryItem
-	Start TimeTrackState `json:"start"`
-	End   TimeTrackState `json:"end"`
+	Before TimeTrackState `json:"before"`
+	After  TimeTrackState `json:"after"`
 }
