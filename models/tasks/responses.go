@@ -23,8 +23,8 @@ type Task struct {
 	DueDate             string        `json:"due_date"`
 	StartDate           string        `json:"start_date"`
 	Points              int           `json:"points"`
-	TimeEstimate        string        `json:"time_estimate"`
-	TimeSpent           string        `json:"time_spent"`
+	TimeEstimate        int           `json:"time_estimate"`
+	TimeSpent           int           `json:"time_spent"`
 	CustomFields        []CustomField `json:"custom_fields"`
 	List                Entity        `json:"list"`
 	Folder              Entity        `json:"folder"`
