@@ -12,11 +12,12 @@ type Task struct {
 	DateCreated         string        `json:"date_created"`
 	DateUpdated         string        `json:"date_updated"`
 	DateClosed          string        `json:"date_closed"`
-	Creator             Creator       `json:"creator"`
-	Assignees           []string      `json:"assignees"`
-	Watchers            []string      `json:"watchers"`
-	Checklists          []string      `json:"checklists"`
-	Tags                []string      `json:"tags"`
+	Creator             User          `json:"creator"`
+	Assignees           []User        `json:"assignees"`
+	Watchers            []User        `json:"watchers"`
+	GroupAssignees      []User        `json:"group_assignees"`
+	Checklists          []Checklist   `json:"checklists"`
+	Tags                []Tag         `json:"tags"`
 	Parent              string        `json:"parent"`
 	Priority            string        `json:"priority"`
 	DueDate             string        `json:"due_date"`
@@ -33,6 +34,13 @@ type Task struct {
 	Attachments         []Attachment  `json:"attachments"`
 }
 
+type Tag struct {
+	Name    string `json:"name"`
+	TagFg   string `json:"tag_fg"`
+	TabBg   string `json:"tab_bg"`
+	Creator int    `json:"creator"`
+}
+
 type Status struct {
 	Status     string `json:"status"`
 	Color      string `json:"color"`
@@ -40,10 +48,11 @@ type Status struct {
 	Type       string `json:"type"`
 }
 
-type Creator struct {
+type User struct {
 	ID             int    `json:"id"`
 	Username       string `json:"username"`
 	Color          string `json:"color"`
+	Email          string `json:"email"`
 	ProfilePicture string `json:"profilePicture"`
 }
 
@@ -110,4 +119,28 @@ type UserDetail struct {
 type IDDetail struct {
 	Type            string `json:"type"`
 	ContentEncoding string `json:"contentEncoding"`
+}
+
+type Checklist struct {
+	ID          string `json:"id"`
+	TaskID      string `json:"task_id"`
+	Name        string `json:"name"`
+	DateCreated int64  `json:"date_created"`
+	OrderIndex  int    `json:"orderindex"`
+	Creator     int    `json:"creator"`
+	Resolved    int    `json:"resolved"`
+	Unresolved  int    `json:"unresolved"`
+	Items       []Item `json:"items"`
+}
+
+type Item struct {
+	ID            string  `json:"id"`
+	Name          string  `json:"name"`
+	OrderIndex    int     `json:"orderindex"`
+	Assignee      *string `json:"assignee"`
+	GroupAssignee *string `json:"group_assignee"`
+	Resolved      bool    `json:"resolved"`
+	Parent        *string `json:"parent"`
+	DateCreated   int64   `json:"date_created"`
+	Children      []Item  `json:"children"`
 }
