@@ -3,6 +3,7 @@ package clickupapp
 import (
 	"github.com/karman-digital/clickup/api/credentials"
 	"github.com/karman-digital/clickup/api/lists"
+	"github.com/karman-digital/clickup/api/tasks"
 	"github.com/karman-digital/clickup/api/timetracking"
 )
 
@@ -26,5 +27,6 @@ func NewClickUpInstance(creds *credentials.Credentials) *ClickUp {
 func NewApiClient(creds *credentials.Credentials) ApiClient {
 	return ApiClient{
 		TimeTracking: timetracking.NewTimeTracking(creds),
+		Tasks:        tasks.NewTasks(creds),
 	}
 }
