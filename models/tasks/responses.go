@@ -19,7 +19,7 @@ type Task struct {
 	Checklists          []Checklist   `json:"checklists"`
 	Tags                []Tag         `json:"tags"`
 	Parent              string        `json:"parent"`
-	Priority            string        `json:"priority"`
+	Priority            Priority      `json:"priority"`
 	DueDate             string        `json:"due_date"`
 	StartDate           string        `json:"start_date"`
 	Points              int           `json:"points"`
@@ -31,7 +31,34 @@ type Task struct {
 	Space               Entity        `json:"space"`
 	URL                 string        `json:"url"`
 	MarkdownDescription string        `json:"markdown_description"`
+	Dependencies        []string      `json:"dependencies"`
+	LinkedTasks         []LinkedTask  `json:"linked_tasks"`
 	Attachments         []Attachment  `json:"attachments"`
+}
+
+type Dependency struct {
+	TaskID      string `json:"task_id"`
+	DependsOn   string `json:"depends_on"`
+	Type        int    `json:"type"`
+	DateCreated string `json:"date_created"`
+	UserId      string `json:"user_id"`
+	WorkspaceId string `json:"workspace_id"`
+	ChainId     string `json:"chain_id"`
+}
+
+type LinkedTask struct {
+	TaskID      string `json:"task_id"`
+	LinkId      string `json:"link_id"`
+	DateCreated string `json:"date_created"`
+	UserId      string `json:"user_id"`
+	WorkspaceId string `json:"workspace_id"`
+}
+
+type Priority struct {
+	Color      string `json:"color"`
+	Id         string `json:"id"`
+	OrderIndex string `json:"orderindex"`
+	Priority   string `json:"priority"`
 }
 
 type Tag struct {
