@@ -152,7 +152,7 @@ type Checklist struct {
 	ID          string `json:"id"`
 	TaskID      string `json:"task_id"`
 	Name        string `json:"name"`
-	DateCreated int64  `json:"date_created"`
+	DateCreated string `json:"date_created"`
 	OrderIndex  int    `json:"orderindex"`
 	Creator     int    `json:"creator"`
 	Resolved    int    `json:"resolved"`
@@ -168,6 +168,6 @@ type Item struct {
 	GroupAssignee *string `json:"group_assignee"`
 	Resolved      bool    `json:"resolved"`
 	Parent        *string `json:"parent"`
-	DateCreated   int64   `json:"date_created"`
+	DateCreated   string  `json:"date_created"`
 	Children      []Item  `json:"children"`
 }
