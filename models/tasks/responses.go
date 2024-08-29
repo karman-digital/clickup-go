@@ -31,7 +31,7 @@ type Task struct {
 	Space               Entity        `json:"space"`
 	URL                 string        `json:"url"`
 	MarkdownDescription string        `json:"markdown_description"`
-	Dependencies        []string      `json:"dependencies"`
+	Dependencies        []Dependency  `json:"dependencies"`
 	LinkedTasks         []LinkedTask  `json:"linked_tasks"`
 	Attachments         []Attachment  `json:"attachments"`
 }
@@ -90,17 +90,8 @@ type CustomField struct {
 	TypeConfig     map[string]any `json:"type_config"`
 	DateCreated    string         `json:"date_created"`
 	HideFromGuests bool           `json:"hide_from_guests"`
-	Value          Value          `json:"value"`
+	Value          any            `json:"value"`
 	Required       bool           `json:"required"`
-}
-
-type Value struct {
-	ID             int    `json:"id"`
-	Username       string `json:"username"`
-	Email          string `json:"email"`
-	Color          string `json:"color"`
-	Initials       string `json:"initials"`
-	ProfilePicture string `json:"profilePicture"`
 }
 
 type Entity struct {
