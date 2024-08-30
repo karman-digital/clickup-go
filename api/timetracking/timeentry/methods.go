@@ -12,7 +12,7 @@ import (
 
 func (t *TimeEntryService) GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error) {
 	var timeTrackHistory timetrackingmodels.TimeTrackHistoryResponse
-	resp, err := t.SendTimeTrackingRequest(http.MethodGet, fmt.Sprintf("/teams/%s/time_entries/%s/history", t.GetTeamId(), id), nil)
+	resp, err := t.SendTimeTrackingRequest(http.MethodGet, fmt.Sprintf("/team/%s/time_entries/%s/history", t.GetTeamId(), id), nil)
 	if err != nil {
 		return timetrackingmodels.TimeTrackHistoryResponse{}, err
 	}
