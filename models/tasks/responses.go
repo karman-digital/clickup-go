@@ -116,7 +116,7 @@ type Attachment struct {
 	Size             int     `json:"size"`
 	TotalComments    int     `json:"total_comments"`
 	ResolvedComments int     `json:"resolved_comments"`
-	User             []User  `json:"user"`
+	User             User    `json:"user"`
 	Deleted          bool    `json:"deleted"`
 	Orientation      *int    `json:"orientation"`
 	URL              string  `json:"url"`
@@ -141,7 +141,7 @@ type Item struct {
 	ID            string  `json:"id"`
 	Name          string  `json:"name"`
 	OrderIndex    int     `json:"orderindex"`
-	Assignee      *string `json:"assignee"`
+	Assignee      User    `json:"assignee"`
 	GroupAssignee *string `json:"group_assignee"`
 	Resolved      bool    `json:"resolved"`
 	Parent        *string `json:"parent"`
