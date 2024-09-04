@@ -126,15 +126,15 @@ type Attachment struct {
 }
 
 type Checklist struct {
-	ID          string `json:"id"`
-	TaskID      string `json:"task_id"`
-	Name        string `json:"name"`
-	DateCreated string `json:"date_created"`
-	OrderIndex  int    `json:"orderindex"`
-	Creator     int    `json:"creator"`
-	Resolved    int    `json:"resolved"`
-	Unresolved  int    `json:"unresolved"`
-	Items       []Item `json:"items"`
+	ID          string  `json:"id"`
+	TaskID      string  `json:"task_id"`
+	Name        string  `json:"name"`
+	DateCreated string  `json:"date_created"`
+	OrderIndex  float64 `json:"orderindex"`
+	Creator     int     `json:"creator"`
+	Resolved    int     `json:"resolved"`
+	Unresolved  int     `json:"unresolved"`
+	Items       []Item  `json:"items"`
 }
 
 type Item struct {
