@@ -118,7 +118,7 @@ type Attachment struct {
 	ResolvedComments int     `json:"resolved_comments"`
 	User             User    `json:"user"`
 	Deleted          bool    `json:"deleted"`
-	Orientation      *int    `json:"orientation"`
+	Orientation      *string `json:"orientation"`
 	URL              string  `json:"url"`
 	EmailData        *string `json:"email_data"`
 	URLWithQuery     string  `json:"url_w_query"`
