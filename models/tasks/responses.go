@@ -69,10 +69,10 @@ type Tag struct {
 }
 
 type Status struct {
-	Status     string `json:"status"`
-	Color      string `json:"color"`
-	OrderIndex int    `json:"orderindex"`
-	Type       string `json:"type"`
+	Status     string  `json:"status"`
+	Color      string  `json:"color"`
+	OrderIndex float64 `json:"orderindex"`
+	Type       string  `json:"type"`
 }
 
 type User struct {
@@ -140,7 +140,7 @@ type Checklist struct {
 type Item struct {
 	ID            string  `json:"id"`
 	Name          string  `json:"name"`
-	OrderIndex    int     `json:"orderindex"`
+	OrderIndex    float64 `json:"orderindex"`
 	Assignee      User    `json:"assignee"`
 	GroupAssignee *string `json:"group_assignee"`
 	Resolved      bool    `json:"resolved"`
