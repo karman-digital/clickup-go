@@ -99,30 +99,30 @@ type Entity struct {
 }
 
 type Attachment struct {
-	ID               string  `json:"id"`
-	Date             string  `json:"date"`
-	Title            string  `json:"title"`
-	Type             int     `json:"type"`
-	Source           int     `json:"source"`
-	Version          int     `json:"version"`
-	Extension        string  `json:"extension"`
-	ThumbnailSmall   *string `json:"thumbnail_small"`
-	ThumbnailMedium  *string `json:"thumbnail_medium"`
-	ThumbnailLarge   *string `json:"thumbnail_large"`
-	IsFolder         *bool   `json:"is_folder"`
-	MimeType         string  `json:"mimetype"`
-	Hidden           bool    `json:"hidden"`
-	ParentID         string  `json:"parent_id"`
-	Size             int     `json:"size"`
-	TotalComments    int     `json:"total_comments"`
-	ResolvedComments int     `json:"resolved_comments"`
-	User             User    `json:"user"`
-	Deleted          bool    `json:"deleted"`
-	Orientation      *string `json:"orientation"`
-	URL              string  `json:"url"`
-	EmailData        *string `json:"email_data"`
-	URLWithQuery     string  `json:"url_w_query"`
-	URLWithHost      string  `json:"url_w_host"`
+	ID               string     `json:"id"`
+	Date             string     `json:"date"`
+	Title            string     `json:"title"`
+	Type             int        `json:"type"`
+	Source           int        `json:"source"`
+	Version          int        `json:"version"`
+	Extension        string     `json:"extension"`
+	ThumbnailSmall   *string    `json:"thumbnail_small"`
+	ThumbnailMedium  *string    `json:"thumbnail_medium"`
+	ThumbnailLarge   *string    `json:"thumbnail_large"`
+	IsFolder         *bool      `json:"is_folder"`
+	MimeType         string     `json:"mimetype"`
+	Hidden           bool       `json:"hidden"`
+	ParentID         string     `json:"parent_id"`
+	Size             int        `json:"size"`
+	TotalComments    int        `json:"total_comments"`
+	ResolvedComments int        `json:"resolved_comments"`
+	User             User       `json:"user"`
+	Deleted          bool       `json:"deleted"`
+	Orientation      *string    `json:"orientation"`
+	URL              string     `json:"url"`
+	EmailData        *EmailData `json:"email_data"`
+	URLWithQuery     string     `json:"url_w_query"`
+	URLWithHost      string     `json:"url_w_host"`
 }
 
 type Checklist struct {
@@ -147,4 +147,14 @@ type Item struct {
 	Parent        *string `json:"parent"`
 	DateCreated   string  `json:"date_created"`
 	Children      []Item  `json:"children"`
+}
+
+type EmailData struct {
+	ID          string   `json:"id"`
+	Msg         string   `json:"msg"`
+	From        string   `json:"from"`
+	Email       string   `json:"email"`
+	Client      string   `json:"client"`
+	Subject     string   `json:"subject"`
+	Attachments []string `json:"attachments"`
 }
