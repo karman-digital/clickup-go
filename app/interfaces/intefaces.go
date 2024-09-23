@@ -11,7 +11,8 @@ type TimeEntry interface {
 }
 
 type Tasks interface {
-	GetTask(id string, opts ...taskmodels.GetTaskOptions) (taskmodels.Task, error)
+	GetTask(taskID string, opts ...taskmodels.GetTaskOptions) (taskmodels.TaskGetResponse, error)
+	CreateTask(listId string, task taskmodels.TaskPostBody) (taskmodels.TaskGetResponse, error)
 }
 
 type Lists interface {

@@ -13,7 +13,6 @@ type Task struct {
 	DateUpdated         string        `json:"date_updated,omitempty"`
 	DateClosed          string        `json:"date_closed,omitempty"`
 	Creator             User          `json:"creator,omitempty"`
-	Assignees           []User        `json:"assignees,omitempty"`
 	Watchers            []User        `json:"watchers,omitempty"`
 	GroupAssignees      []User        `json:"group_assignees,omitempty"`
 	Checklists          []Checklist   `json:"checklists,omitempty"`
@@ -34,6 +33,11 @@ type Task struct {
 	Dependencies        []Dependency  `json:"dependencies,omitempty"`
 	LinkedTasks         []LinkedTask  `json:"linked_tasks,omitempty"`
 	Attachments         []Attachment  `json:"attachments,omitempty"`
+}
+
+type TaskGetResponse struct {
+	Task
+	Assignees []User `json:"assignees,omitempty"`
 }
 
 type TaskPostBody struct {
