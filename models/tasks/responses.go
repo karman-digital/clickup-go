@@ -84,14 +84,14 @@ type User struct {
 }
 
 type CustomField struct {
-	ID             string         `json:"id"`
-	Name           string         `json:"name"`
-	Type           string         `json:"type"`
-	TypeConfig     map[string]any `json:"type_config"`
-	DateCreated    string         `json:"date_created"`
-	HideFromGuests bool           `json:"hide_from_guests"`
-	Value          any            `json:"value"`
-	Required       bool           `json:"required"`
+	ID             string         `json:"id,omitempty"`
+	Name           string         `json:"name,omitempty"`
+	Type           string         `json:"type,omitempty"`
+	TypeConfig     map[string]any `json:"type_config,omitempty"`
+	DateCreated    string         `json:"date_created,omitempty"`
+	HideFromGuests bool           `json:"hide_from_guests,omitempty"`
+	Value          any            `json:"value,omitempty"`
+	Required       bool           `json:"required,omitempty"`
 }
 
 type Entity struct {
