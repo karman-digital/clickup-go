@@ -1,39 +1,44 @@
 package taskmodels
 
 type Task struct {
-	ID                  string        `json:"id"`
-	CustomID            string        `json:"custom_id"`
-	CustomItemID        int           `json:"custom_item_id"`
-	Name                string        `json:"name"`
-	TextContent         string        `json:"text_content"`
-	Description         string        `json:"description"`
-	Status              Status        `json:"status"`
-	OrderIndex          string        `json:"orderindex"`
-	DateCreated         string        `json:"date_created"`
-	DateUpdated         string        `json:"date_updated"`
-	DateClosed          string        `json:"date_closed"`
-	Creator             User          `json:"creator"`
-	Assignees           []User        `json:"assignees"`
-	Watchers            []User        `json:"watchers"`
-	GroupAssignees      []User        `json:"group_assignees"`
-	Checklists          []Checklist   `json:"checklists"`
-	Tags                []Tag         `json:"tags"`
-	Parent              string        `json:"parent"`
-	Priority            Priority      `json:"priority"`
-	DueDate             string        `json:"due_date"`
-	StartDate           string        `json:"start_date"`
-	Points              int           `json:"points"`
-	TimeEstimate        int           `json:"time_estimate"`
-	TimeSpent           int           `json:"time_spent"`
-	CustomFields        []CustomField `json:"custom_fields"`
-	List                Entity        `json:"list"`
-	Folder              Entity        `json:"folder"`
-	Space               Entity        `json:"space"`
-	URL                 string        `json:"url"`
-	MarkdownDescription string        `json:"markdown_description"`
-	Dependencies        []Dependency  `json:"dependencies"`
-	LinkedTasks         []LinkedTask  `json:"linked_tasks"`
-	Attachments         []Attachment  `json:"attachments"`
+	ID                  string        `json:"id,omitempty"`
+	CustomID            string        `json:"custom_id,omitempty"`
+	CustomItemID        int           `json:"custom_item_id,omitempty"`
+	Name                string        `json:"name,omitempty"`
+	TextContent         string        `json:"text_content,omitempty"`
+	Description         string        `json:"description,omitempty"`
+	Status              Status        `json:"status,omitempty"`
+	OrderIndex          string        `json:"orderindex,omitempty"`
+	DateCreated         string        `json:"date_created,omitempty"`
+	DateUpdated         string        `json:"date_updated,omitempty"`
+	DateClosed          string        `json:"date_closed,omitempty"`
+	Creator             User          `json:"creator,omitempty"`
+	Assignees           []User        `json:"assignees,omitempty"`
+	Watchers            []User        `json:"watchers,omitempty"`
+	GroupAssignees      []User        `json:"group_assignees,omitempty"`
+	Checklists          []Checklist   `json:"checklists,omitempty"`
+	Tags                []Tag         `json:"tags,omitempty"`
+	Parent              string        `json:"parent,omitempty"`
+	Priority            Priority      `json:"priority,omitempty"`
+	DueDate             string        `json:"due_date,omitempty"`
+	StartDate           string        `json:"start_date,omitempty"`
+	Points              int           `json:"points,omitempty"`
+	TimeEstimate        int           `json:"time_estimate,omitempty"`
+	TimeSpent           int           `json:"time_spent,omitempty"`
+	CustomFields        []CustomField `json:"custom_fields,omitempty"`
+	List                Entity        `json:"list,omitempty"`
+	Folder              Entity        `json:"folder,omitempty"`
+	Space               Entity        `json:"space,omitempty"`
+	URL                 string        `json:"url,omitempty"`
+	MarkdownDescription string        `json:"markdown_description,omitempty"`
+	Dependencies        []Dependency  `json:"dependencies,omitempty"`
+	LinkedTasks         []LinkedTask  `json:"linked_tasks,omitempty"`
+	Attachments         []Attachment  `json:"attachments,omitempty"`
+}
+
+type TaskPostBody struct {
+	Task
+	Assignees []int `json:"assignees"`
 }
 
 type Dependency struct {
