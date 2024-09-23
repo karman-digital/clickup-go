@@ -1,6 +1,6 @@
 package taskmodels
 
-type Task struct {
+type TaskGetResponse struct {
 	ID                  string        `json:"id,omitempty"`
 	CustomID            string        `json:"custom_id,omitempty"`
 	CustomItemID        int           `json:"custom_item_id,omitempty"`
@@ -33,16 +33,7 @@ type Task struct {
 	Dependencies        []Dependency  `json:"dependencies,omitempty"`
 	LinkedTasks         []LinkedTask  `json:"linked_tasks,omitempty"`
 	Attachments         []Attachment  `json:"attachments,omitempty"`
-}
-
-type TaskGetResponse struct {
-	Task
-	Assignees []User `json:"assignees,omitempty"`
-}
-
-type TaskPostBody struct {
-	Task
-	Assignees []int `json:"assignees"`
+	Assignees           []User        `json:"assignees,omitempty"`
 }
 
 type Dependency struct {
