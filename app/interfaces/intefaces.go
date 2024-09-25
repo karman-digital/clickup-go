@@ -9,7 +9,7 @@ import (
 
 type TimeEntry interface {
 	GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error)
-	CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntry, error)
+	CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntryResponse, error)
 }
 
 type Tasks interface {
