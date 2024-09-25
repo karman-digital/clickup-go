@@ -35,27 +35,27 @@ func (t *TimeEntryService) GetTimeEntryHistory(id string) (timetrackingmodels.Ti
 	return timeTrackHistory, nil
 }
 
-func (t *TimeEntryService) CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntry, error) {
-	responseTimeEntry := timetrackingmodels.TimeEntry{}
+func (t *TimeEntryService) CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntryResponse, error) {
+	responseTimeEntry := timetrackingmodels.TimeEntryResponse{}
 	requestBody, err := json.Marshal(timeEntry)
 	if err != nil {
-		return timetrackingmodels.TimeEntry{}, err
+		return timetrackingmodels.TimeEntryResponse{}, err
 	}
 	resp, err := t.SendTimeTrackingRequest(http.MethodPost, fmt.Sprintf("/team/%s/time_entries", t.GetTeamId()), requestBody, opts...)
 	if err != nil {
-		return timetrackingmodels.TimeEntry{}, err
+		return timetrackingmodels.TimeEntryResponse{}, err
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return timetrackingmodels.TimeEntry{}, err
+		return timetrackingmodels.TimeEntryResponse{}, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return timetrackingmodels.TimeEntry{}, fmt.Errorf("error body: %s", string(body))
+		return timetrackingmodels.TimeEntryResponse{}, fmt.Errorf("error body: %s", string(body))
 	}
 	err = json.Unmarshal(body, &responseTimeEntry)
 	if err != nil {
-		return timetrackingmodels.TimeEntry{}, err
+		return timetrackingmodels.TimeEntryResponse{}, err
 	}
 	return responseTimeEntry, nil
 }

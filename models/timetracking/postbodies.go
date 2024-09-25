@@ -7,10 +7,10 @@ type TimeEntry struct {
 		TagBg string `json:"tag_bg"`
 		TagFg string `json:"tag_fg"`
 	} `json:"tags,omitempty"`
-	Start    int64   `json:"start"`
-	Billable bool    `json:"billable"`
-	Duration float64 `json:"duration"`
-	Assignee int     `json:"assignee"`
-	TaskID   string  `json:"tid"`
-	End      int64   `json:"end,omitempty"`
+	Start    int64  `json:"start"`
+	Billable bool   `json:"billable"`
+	Duration int64  `json:"duration"`
+	Assignee int    `json:"assignee"`
+	TaskID   string `json:"tid"`
+	End      int64  `json:"end,omitempty"`
 }
