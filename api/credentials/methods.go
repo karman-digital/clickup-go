@@ -5,11 +5,11 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/go-retryablehttp"
+	sharedmodels "github.com/karman-digital/clickup/models/shared"
 	taskmodels "github.com/karman-digital/clickup/models/tasks"
-	timetrackingmodels "github.com/karman-digital/clickup/models/timetracking"
 )
 
-func (c *Credentials) SendTimeTrackingRequest(method, path string, body []byte, opts ...timetrackingmodels.GetOptions) (*http.Response, error) {
+func (c *Credentials) SendTimeTrackingRequest(method, path string, body []byte, opts ...sharedmodels.GetOptions) (*http.Response, error) {
 	req, err := retryablehttp.NewRequest(method, fmt.Sprintf("https://api.clickup.com/api/v2%s", path), body)
 	if err != nil {
 		return nil, err

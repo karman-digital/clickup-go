@@ -2,12 +2,14 @@ package clickupintefaces
 
 import (
 	listmodels "github.com/karman-digital/clickup/models/lists"
+	sharedmodels "github.com/karman-digital/clickup/models/shared"
 	taskmodels "github.com/karman-digital/clickup/models/tasks"
 	timetrackingmodels "github.com/karman-digital/clickup/models/timetracking"
 )
 
 type TimeEntry interface {
 	GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error)
+	CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntry, error)
 }
 
 type Tasks interface {
