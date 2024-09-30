@@ -10,6 +10,7 @@ import (
 type TimeEntry interface {
 	GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error)
 	CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntryResponse, error)
+	DeleteTimeEntry(id string) error
 }
 
 type Tasks interface {

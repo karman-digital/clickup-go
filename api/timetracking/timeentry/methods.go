@@ -59,3 +59,19 @@ func (t *TimeEntryService) CreateTimeEntry(timeEntry timetrackingmodels.TimeEntr
 	}
 	return responseTimeEntry, nil
 }
+
+func (t *TimeEntryService) DeleteTimeEntry(id string) error {
+	resp, err := t.SendTimeTrackingRequest(http.MethodDelete, fmt.Sprintf("/team/%s/time_entries/%s", t.GetTeamId(), id), nil)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("error body: %s", string(body))
+	}
+	return nil
+}
