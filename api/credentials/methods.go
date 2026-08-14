@@ -1,6 +1,7 @@
 package credentials
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -8,6 +9,32 @@ import (
 	sharedmodels "github.com/karman-digital/clickup/models/shared"
 	taskmodels "github.com/karman-digital/clickup/models/tasks"
 )
+
+func (c *Credentials) SendTimeTrackingRequestWithContext(ctx context.Context, method, path string, body []byte) (*http.Response, error) {
+	req, err := retryablehttp.NewRequest(method, fmt.Sprintf("https://api.clickup.com/api/v2%s", path), body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if c.apiKey != "" {
+		req.Header.Set("Authorization", c.apiKey)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	return c.client.Do(req)
+}
+
+func (c *Credentials) SendRequestWithContext(ctx context.Context, method, path string, body []byte) (*http.Response, error) {
+	req, err := retryablehttp.NewRequest(method, fmt.Sprintf("https://api.clickup.com/api/v2%s", path), body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if c.apiKey != "" {
+		req.Header.Set("Authorization", c.apiKey)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	return c.client.Do(req)
+}
 
 func (c *Credentials) SendTimeTrackingRequest(method, path string, body []byte, opts ...sharedmodels.GetOptions) (*http.Response, error) {
 	req, err := retryablehttp.NewRequest(method, fmt.Sprintf("https://api.clickup.com/api/v2%s", path), body)

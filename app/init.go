@@ -5,6 +5,7 @@ import (
 	"github.com/karman-digital/clickup/api/lists"
 	"github.com/karman-digital/clickup/api/tasks"
 	"github.com/karman-digital/clickup/api/timetracking"
+	"github.com/karman-digital/clickup/api/workspaces"
 )
 
 func InitClickup() *ClickUp {
@@ -27,6 +28,7 @@ func NewClickUpInstance(creds *credentials.Credentials) *ClickUp {
 func NewApiClient(creds *credentials.Credentials) ApiClient {
 	return ApiClient{
 		TimeTracking: timetracking.NewTimeTracking(creds),
+		Workspaces:   workspaces.NewWorkspaceService(creds),
 		Tasks:        tasks.NewTasks(creds),
 	}
 }

@@ -8,6 +8,7 @@ import (
 
 type ApiClient struct {
 	TimeTracking timetracking.TimeTracking
+	Workspaces   clickupintefaces.Workspaces
 	Tasks        clickupintefaces.Tasks
 	Lists        clickupintefaces.Lists
 }

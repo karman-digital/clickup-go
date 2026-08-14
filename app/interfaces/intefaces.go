@@ -1,6 +1,7 @@
 package clickupintefaces
 
 import (
+	"context"
 	listmodels "github.com/karman-digital/clickup/models/lists"
 	sharedmodels "github.com/karman-digital/clickup/models/shared"
 	taskmodels "github.com/karman-digital/clickup/models/tasks"
@@ -9,8 +10,14 @@ import (
 
 type TimeEntry interface {
 	GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error)
+	GetTimeEntries(context.Context, timetrackingmodels.TimeEntryQuery) (timetrackingmodels.TimeEntriesResponse, error)
+	GetTimeEntry(context.Context, string) (timetrackingmodels.TimeEntryRecordResponse, error)
 	CreateTimeEntry(timeEntry timetrackingmodels.TimeEntry, opts ...sharedmodels.GetOptions) (timetrackingmodels.TimeEntryResponse, error)
 	DeleteTimeEntry(id string) error
+}
+
+type Workspaces interface {
+	GetWorkspaceUserIDs(context.Context) ([]string, error)
 }
 
 type Tasks interface {

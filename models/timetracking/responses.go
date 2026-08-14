@@ -1,5 +1,7 @@
 package timetrackingmodels
 
+import sharedmodels "github.com/karman-digital/clickup/models/shared"
+
 type TimeTrackHistoryResponse struct {
 	Data []TimeTrackHistory `json:"data"`
 }
@@ -16,6 +18,32 @@ type TimeTrackHistory struct {
 
 type TimeEntryResponse struct {
 	Data TimeEntryData `json:"data"`
+}
+
+type TimeEntriesResponse struct {
+	Data []TimeEntryRecord `json:"data"`
+}
+
+type TimeEntryRecordResponse struct {
+	Data TimeEntryRecord `json:"data"`
+}
+
+type TimeEntryRecord struct {
+	ID           sharedmodels.Scalar `json:"id"`
+	User         TimeEntryUser       `json:"user"`
+	Start        sharedmodels.Scalar `json:"start"`
+	End          sharedmodels.Scalar `json:"end"`
+	Duration     sharedmodels.Scalar `json:"duration"`
+	TaskLocation TimeEntryLocation   `json:"task_location"`
+}
+
+type TimeEntryUser struct {
+	ID sharedmodels.Scalar `json:"id"`
+}
+
+type TimeEntryLocation struct {
+	ListID  sharedmodels.Scalar `json:"list_id"`
+	SpaceID sharedmodels.Scalar `json:"space_id"`
 }
 
 type TimeEntryData struct {
