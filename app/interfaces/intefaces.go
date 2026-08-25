@@ -2,11 +2,18 @@ package clickupintefaces
 
 import (
 	"context"
+
+	foldermodels "github.com/karman-digital/clickup/models/folders"
 	listmodels "github.com/karman-digital/clickup/models/lists"
 	sharedmodels "github.com/karman-digital/clickup/models/shared"
 	taskmodels "github.com/karman-digital/clickup/models/tasks"
 	timetrackingmodels "github.com/karman-digital/clickup/models/timetracking"
 )
+
+type Folders interface {
+	ListFolders(context.Context, string, bool) ([]foldermodels.Folder, error)
+	GetFolder(context.Context, string) (foldermodels.Folder, error)
+}
 
 type TimeEntry interface {
 	GetTimeEntryHistory(id string) (timetrackingmodels.TimeTrackHistoryResponse, error)
