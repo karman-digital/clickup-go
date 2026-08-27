@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/karman-digital/clickup/api/shared"
 	foldermodels "github.com/karman-digital/clickup/models/folders"
@@ -38,6 +39,27 @@ func (service *Service) GetFolder(ctx context.Context, folderID string) (folderm
 		return foldermodels.Folder{}, err
 	}
 	return folder, nil
+}
+
+func (service *Service) MoveFolder(ctx context.Context, folderID, destinationSpaceID string) error {
+	folderID = strings.TrimSpace(folderID)
+	destinationSpaceID = strings.TrimSpace(destinationSpaceID)
+	if folderID == "" {
+		return fmt.Errorf("folder ID is required")
+	}
+	if destinationSpaceID == "" {
+		return fmt.Errorf("destination Space ID is required")
+	}
+	body, err := json.Marshal(foldermodels.MoveFolderRequest{SpaceID: destinationSpaceID})
+	if err != nil {
+		return fmt.Errorf("encode ClickUp move folder request: %w", err)
+	}
+	path := fmt.Sprintf("/folder/%s/position", url.PathEscape(folderID))
+	response, err := service.requester.SendRequestWithContext(ctx, http.MethodPut, path, body)
+	if err != nil {
+		return classifyTransportError(err)
+	}
+	return decodeResponse(response, &struct{}{})
 }
 
 func decodeResponse(response *http.Response, target any) error {
