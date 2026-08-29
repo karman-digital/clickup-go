@@ -22,6 +22,13 @@ type Folder struct {
 	Hidden       bool                `json:"hidden"`
 	ParentFolder sharedmodels.Scalar `json:"parent_folder"`
 	Space        Space               `json:"space"`
+	Lists        []FolderList        `json:"lists"`
+}
+
+type FolderList struct {
+	ID        sharedmodels.Scalar `json:"id"`
+	Name      string              `json:"name"`
+	TaskCount int                 `json:"task_count"`
 }
 
 type Space struct {
