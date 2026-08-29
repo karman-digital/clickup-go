@@ -6,6 +6,15 @@ type FoldersResponse struct {
 	Folders []Folder `json:"folders"`
 }
 
+type FolderTemplatesResponse struct {
+	Templates []FolderTemplate `json:"templates"`
+}
+
+type FolderTemplate struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
 type Folder struct {
 	ID           sharedmodels.Scalar `json:"id"`
 	Name         string              `json:"name"`

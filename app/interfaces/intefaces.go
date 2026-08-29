@@ -13,6 +13,7 @@ import (
 type Folders interface {
 	ListFolders(context.Context, string, bool) ([]foldermodels.Folder, error)
 	GetFolder(context.Context, string) (foldermodels.Folder, error)
+	ListFolderTemplates(context.Context, string) ([]foldermodels.FolderTemplate, error)
 	MoveFolder(context.Context, string, string) error
 	CreateFolderFromTemplate(context.Context, string, string, foldermodels.CreateFromTemplateBody) (foldermodels.Folder, error)
 }

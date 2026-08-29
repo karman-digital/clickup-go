@@ -46,6 +46,19 @@ func TestBuildCreateFromTemplateRequestRejectsMissingValues(t *testing.T) {
 	}
 }
 
+func TestBuildListFolderTemplatesPath(t *testing.T) {
+	path, err := buildListFolderTemplatesPath(" workspace/1 ")
+	if err != nil {
+		t.Fatalf("buildListFolderTemplatesPath() error = %v", err)
+	}
+	if path != "/team/workspace%2F1/folder_template" {
+		t.Fatalf("path = %q", path)
+	}
+	if _, err := buildListFolderTemplatesPath(" "); err == nil {
+		t.Fatal("buildListFolderTemplatesPath() error = nil")
+	}
+}
+
 func TestClassifyFolderResponseStatus(t *testing.T) {
 	for _, test := range []struct {
 		status int

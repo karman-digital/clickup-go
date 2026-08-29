@@ -41,6 +41,22 @@ func (service *Service) GetFolder(ctx context.Context, folderID string) (folderm
 	return folder, nil
 }
 
+func (service *Service) ListFolderTemplates(ctx context.Context, workspaceID string) ([]foldermodels.FolderTemplate, error) {
+	path, err := buildListFolderTemplatesPath(workspaceID)
+	if err != nil {
+		return nil, err
+	}
+	response, err := service.requester.SendRequestWithContext(ctx, http.MethodGet, path, nil)
+	if err != nil {
+		return nil, classifyTransportError(err)
+	}
+	var templates foldermodels.FolderTemplatesResponse
+	if err := decodeResponse(response, &templates); err != nil {
+		return nil, err
+	}
+	return templates.Templates, nil
+}
+
 func (service *Service) MoveFolder(ctx context.Context, folderID, destinationSpaceID string) error {
 	folderID = strings.TrimSpace(folderID)
 	destinationSpaceID = strings.TrimSpace(destinationSpaceID)
@@ -91,6 +107,14 @@ func buildCreateFromTemplateRequest(spaceID, templateID string, body foldermodel
 	}
 	path := fmt.Sprintf("/space/%s/folder_template/%s", url.PathEscape(spaceID), url.PathEscape(templateID))
 	return path, requestBody, nil
+}
+
+func buildListFolderTemplatesPath(workspaceID string) (string, error) {
+	workspaceID = strings.TrimSpace(workspaceID)
+	if workspaceID == "" {
+		return "", fmt.Errorf("ClickUp Workspace ID is required")
+	}
+	return fmt.Sprintf("/team/%s/folder_template", url.PathEscape(workspaceID)), nil
 }
 
 func decodeResponse(response *http.Response, target any) error {
