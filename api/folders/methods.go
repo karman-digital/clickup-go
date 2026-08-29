@@ -62,26 +62,69 @@ func (service *Service) MoveFolder(ctx context.Context, folderID, destinationSpa
 	return decodeResponse(response, &struct{}{})
 }
 
+func (service *Service) CreateFolderFromTemplate(ctx context.Context, spaceID, templateID string, body foldermodels.CreateFromTemplateBody) (foldermodels.Folder, error) {
+	path, requestBody, err := buildCreateFromTemplateRequest(spaceID, templateID, body)
+	if err != nil {
+		return foldermodels.Folder{}, err
+	}
+	response, err := service.requester.SendRequestWithContext(ctx, http.MethodPost, path, requestBody)
+	if err != nil {
+		return foldermodels.Folder{}, classifyTransportError(err)
+	}
+	var folder foldermodels.Folder
+	if err := decodeResponse(response, &folder); err != nil {
+		return foldermodels.Folder{}, err
+	}
+	return folder, nil
+}
+
+func buildCreateFromTemplateRequest(spaceID, templateID string, body foldermodels.CreateFromTemplateBody) (string, []byte, error) {
+	spaceID = strings.TrimSpace(spaceID)
+	templateID = strings.TrimSpace(templateID)
+	body.Name = strings.TrimSpace(body.Name)
+	if spaceID == "" || templateID == "" || body.Name == "" {
+		return "", nil, fmt.Errorf("ClickUp Space, Folder template and name are required")
+	}
+	requestBody, err := json.Marshal(body)
+	if err != nil {
+		return "", nil, fmt.Errorf("encode ClickUp Folder template request: %w", err)
+	}
+	path := fmt.Sprintf("/space/%s/folder_template/%s", url.PathEscape(spaceID), url.PathEscape(templateID))
+	return path, requestBody, nil
+}
+
 func decodeResponse(response *http.Response, target any) error {
 	defer response.Body.Close()
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return fmt.Errorf("read ClickUp folder response: %w", err)
 	}
-	switch {
-	case response.StatusCode == http.StatusNotFound:
-		return shared.ErrResourceNotFound
-	case response.StatusCode == http.StatusUnauthorized || response.StatusCode == http.StatusForbidden:
-		return shared.ErrPermissionDenied
-	case response.StatusCode == http.StatusTooManyRequests || response.StatusCode >= http.StatusInternalServerError:
-		return fmt.Errorf("%w: ClickUp returned status %d", shared.ErrTransientFailure, response.StatusCode)
-	case response.StatusCode != http.StatusOK:
-		return fmt.Errorf("ClickUp folder request returned status %d: %s", response.StatusCode, string(body))
+	if err := classifyFolderResponseStatus(response.StatusCode); err != nil {
+		return err
 	}
 	if err := json.Unmarshal(body, target); err != nil {
 		return fmt.Errorf("decode ClickUp folder response: %w", err)
 	}
 	return nil
+}
+
+func classifyFolderResponseStatus(status int) error {
+	switch {
+	case status == http.StatusOK:
+		return nil
+	case status == http.StatusNotFound:
+		return shared.ErrResourceNotFound
+	case status == http.StatusUnauthorized || status == http.StatusForbidden:
+		return shared.ErrPermissionDenied
+	case status == http.StatusBadRequest || status == http.StatusUnprocessableEntity:
+		return fmt.Errorf("%w: ClickUp returned status %d", shared.ErrInvalidRequest, status)
+	case status == http.StatusConflict:
+		return fmt.Errorf("%w: ClickUp returned status %d", shared.ErrConflict, status)
+	case status == http.StatusTooManyRequests || status >= http.StatusInternalServerError:
+		return fmt.Errorf("%w: ClickUp returned status %d", shared.ErrTransientFailure, status)
+	default:
+		return fmt.Errorf("ClickUp Folder request returned status %d", status)
+	}
 }
 
 func classifyTransportError(err error) error {
