@@ -116,7 +116,6 @@ func buildListFolderTemplatesPath(workspaceID string) (string, error) {
 	}
 	return fmt.Sprintf("/team/%s/folder_template", url.PathEscape(workspaceID)), nil
 }
-
 func decodeResponse(response *http.Response, target any) error {
 	defer response.Body.Close()
 	body, err := io.ReadAll(response.Body)

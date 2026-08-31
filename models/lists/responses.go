@@ -19,6 +19,10 @@ type List struct {
 	InboundAddress string         `json:"inbound_address,omitempty"`
 }
 
+type ListsResponse struct {
+	Lists []List `json:"lists"`
+}
+
 type Status struct {
 	Status    string `json:"status"`
 	Color     string `json:"color,omitempty"`
