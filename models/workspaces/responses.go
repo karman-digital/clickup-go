@@ -16,5 +16,6 @@ type Member struct {
 }
 
 type User struct {
-	ID sharedmodels.Scalar `json:"id"`
+	ID    sharedmodels.Scalar `json:"id"`
+	Email string              `json:"email"`
 }

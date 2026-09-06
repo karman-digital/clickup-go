@@ -37,6 +37,49 @@ func (ls *ListService) CreateList(folderId string, body listmodels.ListCreationB
 	return list, nil
 }
 
+func (ls *ListService) GetList(listID string) (listmodels.List, error) {
+	var list listmodels.List
+	response, err := ls.SendRequest(http.MethodGet, fmt.Sprintf("/list/%s", url.PathEscape(listID)), nil)
+	if err != nil {
+		return list, err
+	}
+	defer response.Body.Close()
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return list, err
+	}
+	if response.StatusCode == http.StatusNotFound {
+		return list, shared.ErrResourceNotFound
+	}
+	if response.StatusCode != http.StatusOK {
+		return list, fmt.Errorf("error getting list: status %d: %s", response.StatusCode, string(body))
+	}
+	if err := json.Unmarshal(body, &list); err != nil {
+		return list, err
+	}
+	return list, nil
+}
+
+func (ls *ListService) GetFolderlessLists(spaceID string, archived bool) ([]listmodels.List, error) {
+	response, err := ls.SendRequest(http.MethodGet, fmt.Sprintf("/space/%s/list?archived=%t", url.PathEscape(spaceID), archived), nil)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("error getting folderless lists: status %d: %s", response.StatusCode, string(body))
+	}
+	var result listmodels.ListsResponse
+	if err := json.Unmarshal(body, &result); err != nil {
+		return nil, err
+	}
+	return result.Lists, nil
+}
+
 func (ls *ListService) CreateFolderlessList(spaceId string, body listmodels.ListCreationBody) (listmodels.List, error) {
 	var list listmodels.List
 	reqBody, err := json.Marshal(body)

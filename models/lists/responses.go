@@ -1,5 +1,9 @@
 package listmodels
 
+type ListsResponse struct {
+	Lists []List `json:"lists"`
+}
+
 type List struct {
 	ID             string         `json:"id"`
 	Name           string         `json:"name"`

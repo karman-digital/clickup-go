@@ -11,6 +11,18 @@ import (
 )
 
 func (service *Service) GetWorkspaceUserIDs(ctx context.Context) ([]string, error) {
+	users, err := service.GetWorkspaceUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ids := make([]string, 0, len(users))
+	for _, user := range users {
+		ids = append(ids, user.ID)
+	}
+	return ids, nil
+}
+
+func (service *Service) GetWorkspaceUsers(ctx context.Context) ([]WorkspaceUser, error) {
 	response, err := service.requester.SendRequestWithContext(ctx, http.MethodGet, "/team", nil)
 	if err != nil {
 		return nil, err
@@ -31,10 +43,10 @@ func (service *Service) GetWorkspaceUserIDs(ctx context.Context) ([]string, erro
 		if workspace.ID.String() != service.teamID {
 			continue
 		}
-		users := make([]string, 0, len(workspace.Members))
+		users := make([]WorkspaceUser, 0, len(workspace.Members))
 		for _, member := range workspace.Members {
 			if id := member.User.ID.String(); id != "" {
-				users = append(users, id)
+				users = append(users, WorkspaceUser{ID: id, Email: member.User.Email})
 			}
 		}
 		return users, nil

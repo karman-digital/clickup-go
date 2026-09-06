@@ -18,8 +18,15 @@ func (requester *recordingWorkspaceRequester) SendRequestWithContext(_ context.C
 	requester.path = path
 	return &http.Response{
 		StatusCode: http.StatusOK,
-		Body:       io.NopCloser(bytes.NewBufferString(`{"teams":[{"id":"workspace","members":[{"user":{"id":123}},{"user":{"id":"456"}}]}]}`)),
+		Body:       io.NopCloser(bytes.NewBufferString(`{"teams":[{"id":"workspace","members":[{"user":{"id":123,"email":"alex@karman.digital"}},{"user":{"id":"456","email":"sam@karman.digital"}}]}]}`)),
 	}, nil
+}
+
+func TestGetWorkspaceUsersReturnsEmailForSelectedWorkspace(t *testing.T) {
+	users, err := newWorkspaceService(&recordingWorkspaceRequester{}, "workspace").GetWorkspaceUsers(context.Background())
+	if err != nil || len(users) != 2 || users[0].ID != "123" || users[0].Email != "alex@karman.digital" {
+		t.Fatalf("users=%#v err=%v", users, err)
+	}
 }
 
 func TestGetWorkspaceUsersSelectsConfiguredWorkspace(t *testing.T) {

@@ -2,6 +2,7 @@ package clickupintefaces
 
 import (
 	"context"
+	workspaces "github.com/karman-digital/clickup/api/workspaces"
 
 	foldermodels "github.com/karman-digital/clickup/models/folders"
 	listmodels "github.com/karman-digital/clickup/models/lists"
@@ -28,6 +29,7 @@ type TimeEntry interface {
 
 type Workspaces interface {
 	GetWorkspaceUserIDs(context.Context) ([]string, error)
+	GetWorkspaceUsers(context.Context) ([]workspaces.WorkspaceUser, error)
 }
 
 type Tasks interface {

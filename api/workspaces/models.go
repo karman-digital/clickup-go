@@ -13,3 +13,8 @@ type Service struct {
 	requester workspaceRequester
 	teamID    string
 }
+
+type WorkspaceUser struct {
+	ID    string
+	Email string
+}
