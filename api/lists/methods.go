@@ -88,6 +88,30 @@ func (ls *ListService) CreateFolderlessListFromTemplate(spaceId string, template
 	return list, nil
 }
 
+func (ls *ListService) CreateListFromTemplate(folderId string, templateId string, body listmodels.ListCreationBody) (listmodels.List, error) {
+	var list listmodels.List
+	reqBody, err := json.Marshal(body)
+	if err != nil {
+		return listmodels.List{}, err
+	}
+	resp, err := ls.sendRequest(http.MethodPost, fmt.Sprintf("/folder/%s/list_template/%s", folderId, templateId), reqBody)
+	if err != nil {
+		return listmodels.List{}, err
+	}
+	defer resp.Body.Close()
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return listmodels.List{}, err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return listmodels.List{}, errors.New("error creating list from template " + string(respBody))
+	}
+	if err := json.Unmarshal(respBody, &list); err != nil {
+		return listmodels.List{}, err
+	}
+	return list, nil
+}
+
 func (ls *ListService) GetList(listID string) (listmodels.List, error) {
 	var list listmodels.List
 	resp, err := ls.sendRequest(http.MethodGet, fmt.Sprintf("/list/%s", url.PathEscape(listID)), nil)

@@ -43,4 +43,5 @@ type Lists interface {
 	CreateList(folderId string, body listmodels.ListCreationBody) (listmodels.List, error)
 	CreateFolderlessList(spaceId string, body listmodels.ListCreationBody) (listmodels.List, error)
 	CreateFolderlessListFromTemplate(spaceId string, templateId string, body listmodels.ListCreationBody) (listmodels.List, error)
+	CreateListFromTemplate(folderId string, templateId string, body listmodels.ListCreationBody) (listmodels.List, error)
 }
